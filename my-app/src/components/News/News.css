@@ -364,3 +364,17 @@ background: #ccc;
     align-items: center;
     justify-content: space-between;
 }
+.logoutButton {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  font-style: italic;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logoutButton:hover {
+  background-color: #333;
+}
