@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
 
 import InputControl from "../InputControl/InputControl";
 import { auth } from "../../firebase";
@@ -33,6 +33,35 @@ function Signup() {
           displayName: values.name,
         });
         navigate("/login");
+      })
+      .catch((err) => {
+        setSubmitButtonDisabled(false);
+        setErrorMsg(err.message);
+      });
+  };
+
+  const handleGoogleSignup = () => {
+    const provider = new GoogleAuthProvider();
+    setSubmitButtonDisabled(true);
+    signInWithPopup(auth, provider)
+      .then(() => {
+        setSubmitButtonDisabled(false);
+        navigate("/news"); // Redirect to the news page
+      })
+      .catch((err) => {
+        setSubmitButtonDisabled(false);
+        setErrorMsg(err.message);
+      });
+  };
+  
+
+  const handleGithubSignup = () => {
+    const provider = new GithubAuthProvider();
+    setSubmitButtonDisabled(true);
+    signInWithPopup(auth, provider)
+      .then(() => {
+        setSubmitButtonDisabled(false);
+        navigate("/news"); // Redirect to the news page
       })
       .catch((err) => {
         setSubmitButtonDisabled(false);
@@ -78,6 +107,11 @@ function Signup() {
               <Link to="/login">Login</Link>
             </span>
           </p>
+
+          <div className={styles.socialButtons}>
+            <button onClick={handleGoogleSignup}>Sign up with Google</button>
+            <button onClick={handleGithubSignup}>Sign up with GitHub</button>
+          </div>
         </div>
       </div>
     </div>
